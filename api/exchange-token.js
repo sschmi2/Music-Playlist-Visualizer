@@ -6,7 +6,7 @@ export default async function handler(req, res) {
             message: "exchange_token endpoint is working", 
             method: req.method,
             timestamp: new Date().toISOString()
-        });
+        }); 
     }
     
     if (req.method !== 'POST') {
@@ -24,6 +24,7 @@ export default async function handler(req, res) {
         params.append("code", code);
         params.append("redirect_uri", REDIRECT_URI);
         params.append("client_id", CLIENT_ID);
+        params.append("client_secret", CLIENT_SECRET);
         params.append("code_verifier", code_verifier);
 
         const response = await axios.post(
