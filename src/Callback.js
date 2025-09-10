@@ -65,7 +65,7 @@ function Callback() {
             console.error("❌ Token exchange failed:", err.response?.data || err.message);
             
             // Clear session storage on error
-            sessionStorage.removeItem("code_verifier");
+            sessionStorage.removeItem("code_verifier");g
             
             setError("Authentication failed. Please try logging in again.");
             
