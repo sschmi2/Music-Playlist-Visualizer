@@ -13,7 +13,6 @@ const SCOPES = [
 ];
 
 function Login() {
-    const navigate = useNavigate();
 
     const handleLogin = async () => {
         const codeVerifier = generateCodeVerifier();

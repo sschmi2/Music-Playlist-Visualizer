@@ -61,7 +61,7 @@ function PlaylistManager() {
         };
 
         fetchPlaylists();
-    }, [navigate]);
+    }, [navigate, clearTokensAndRedirect]);
 
     // UPDATED: Now fetches ALL tracks with pagination support
     const fetchPlaylistTracks = async (playlistId) => {
@@ -124,16 +124,6 @@ function PlaylistManager() {
             setError("Failed to fetch playlist tracks.");
         } finally {
             setLoading(false);
-        }
-    };
-
-    const handlePlaylistChange = (e) => {
-        const playlistId = e.target.value;
-        setSelectedPlaylistId(playlistId);
-        
-        if (playlistId) {
-            setSongs([]); // Clear current songs
-            fetchPlaylistTracks(playlistId);
         }
     };
 
