@@ -1,6 +1,15 @@
 const axios = require("axios");
 
 module.exports = async function handler(req, res) {
+    if (req.method === 'GET') {
+        return res.json({ 
+            message: "exchange_token endpoint is working", 
+            method: req.method,
+            timestamp: new Date().toISOString()
+        });
+    }
+    
+
     if (req.method !== 'POST') {
         return res.status(405).json({ error: 'Method not allowed' });
     }
