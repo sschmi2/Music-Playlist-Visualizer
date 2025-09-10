@@ -1,10 +1,6 @@
-import axios from "axios";
+const axios = require("axios");
 
-export default async function handler(req, res) {
-    if (req.method === 'GET') {
-        return res.json({ message: "exchange_token endpoint is working", method: "GET" });
-    }
-    
+module.exports = async function handler(req, res) {
     if (req.method !== 'POST') {
         return res.status(405).json({ error: 'Method not allowed' });
     }
@@ -33,4 +29,4 @@ export default async function handler(req, res) {
         console.error("Token exchange failed: ", error.response?.data || error.message);
         res.status(400).json({ error: "Failed to exchange token" });
     }
-}
+};
