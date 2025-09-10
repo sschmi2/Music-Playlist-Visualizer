@@ -1,20 +1,32 @@
 // api/exchange-token.js
-import axios from "axios";
+const axios = require("axios");
 
-export const config = {
-  api: {
-    bodyParser: true, // ensure Vercel parses JSON body
-  },
-};
+// Use module.exports instead of export
+module.exports = async function handler(req, res) {
+  // Add CORS headers
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
 
-export default async function handler(req, res) {
+  if (req.method === 'OPTIONS') {
+    return res.status(200).end();
+  }
+
   console.log("Handler called with method:", req.method);
+  console.log("Environment check:", {
+    hasClientId: !!process.env.SPOTIFY_CLIENT_ID,
+    hasClientSecret: !!process.env.SPOTIFY_CLIENT_SECRET,
+  });
 
   if (req.method === "GET") {
     return res.json({
       message: "exchange_token endpoint is working",
       method: req.method,
       timestamp: new Date().toISOString(),
+      env_status: {
+        hasClientId: !!process.env.SPOTIFY_CLIENT_ID,
+        hasClientSecret: !!process.env.SPOTIFY_CLIENT_SECRET,
+      }
     });
   }
 
@@ -39,6 +51,8 @@ export default async function handler(req, res) {
   }
 
   try {
+    console.log("Attempting token exchange with Spotify...");
+    
     const params = new URLSearchParams();
     params.append("grant_type", "authorization_code");
     params.append("code", code);
@@ -50,19 +64,23 @@ export default async function handler(req, res) {
     const response = await axios.post(
       "https://accounts.spotify.com/api/token",
       params,
-      { headers: { "Content-Type": "application/x-www-form-urlencoded" } }
+      { 
+        headers: { 
+          "Content-Type": "application/x-www-form-urlencoded" 
+        }
+      }
     );
 
     console.log("Token exchange success");
-    res.json(response.data);
+    return res.json(response.data);
+
   } catch (error) {
-    console.error(
-      "Token exchange failed. Full error object:",
-      error.toJSON ? error.toJSON() : error
-    );
-    res.status(500).json({
+    console.error("Token exchange failed:", error.message);
+    console.error("Error response:", error.response?.data);
+    
+    return res.status(500).json({
       error: "Failed to exchange token",
       details: error.response?.data || error.message,
     });
   }
-}
+};
