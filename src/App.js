@@ -1,24 +1,21 @@
-import logo from './logo.svg';
 import './App.css';
+import PlaylistManager from './PlaylistManager';
+import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
+import Login from "./Login";
+import Callback from "./Callback";
 
 function App() {
+  const token = localStorage.getItem("spotifyAccessToken");
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <Routes>
+        {/* if logged in, show playlist manager, else redirect to login */}
+        <Route path="/" element={token ? <PlaylistManager /> : <Navigate to="/login" replace />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/callback" element={<Callback />} />
+      </Routes>
+    </Router>
   );
 }
 
