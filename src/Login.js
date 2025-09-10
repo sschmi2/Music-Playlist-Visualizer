@@ -1,6 +1,5 @@
 // src/Login.js
 import React from "react";
-import { useNavigate } from "react-router-dom";
 import { generateCodeVerifier, generateCodeChallenge } from "./pkceUtils";
 
 const CLIENT_ID = "8b0a8581c4bb4ec1a70a9b140ac17399"; // copy from Spotify dashboard

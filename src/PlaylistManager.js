@@ -4,6 +4,7 @@ import BinaryTreeViz from './BinaryTreeViz';
 import MaxHeap from './MaxHeap';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useCallback } from 'react';
 
 function PlaylistManager() {
     const navigate = useNavigate();
@@ -18,12 +19,12 @@ function PlaylistManager() {
     };
 
     // helper: clear tokens + redirect
-    const clearTokensAndRedirect = () => {
+    const clearTokensAndRedirect = useCallback(() => {
         localStorage.removeItem("spotifyAccessToken");
         localStorage.removeItem("spotifyRefreshToken");
         localStorage.removeItem("spotifyTokenExpiry");
         navigate('/login');
-    };
+    }, [navigate]);
 
     useEffect(() => {
         const fetchPlaylists = async () => {
