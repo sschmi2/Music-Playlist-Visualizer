@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { generateCodeVerifier, generateCodeChallenge } from "./pkceUtils";
 
 const CLIENT_ID = "8b0a8581c4bb4ec1a70a9b140ac17399"; // copy from Spotify dashboard
-const REDIRECT_URI = "http://127.0.0.1:3000/callback";  // must match in dashboard
+const REDIRECT_URI = "https://music-playlist-visualizer.vercel.app/callback";  // must match in dashboard
 const AUTH_ENDPOINT = "https://accounts.spotify.com/authorize"; 
 const SCOPES = [
     "user-read-email",

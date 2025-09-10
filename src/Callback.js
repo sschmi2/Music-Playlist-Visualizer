@@ -40,7 +40,7 @@ function Callback() {
 
         setStatus("Exchanging authorization code for access token...");
         
-        axios.post("http://127.0.0.1:8888/exchange_token", {
+        axios.post("https://music-playlist-visualizer.vercel.app/exchange_token", {
             code,
             code_verifier: codeVerifier,
         })

@@ -12,7 +12,7 @@ app.use(express.urlencoded({ extended: true }));
 
 const CLIENT_ID = process.env.SPOTIFY_CLIENT_ID;
 const CLIENT_SECRET = process.env.SPOTIFY_CLIENT_SECRET;
-const REDIRECT_URI = "http://127.0.0.1:3000/callback";
+const REDIRECT_URI = "https://music-playlist-visualizer.vercel.app/callback";
 
 // step 1: exchange code for tokens
 app.post("/exchange_token", async (req, res) => {
