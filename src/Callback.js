@@ -1,5 +1,5 @@
 // src/Callback.js 
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
@@ -7,8 +7,15 @@ function Callback() {
     const navigate = useNavigate();
     const [error, setError] = useState(null);
     const [status, setStatus] = useState("Processing...");
+    const hasProcessed = useRef(false); // Prevent double execution
 
     useEffect(() => {
+        // Prevent multiple executions in StrictMode
+        if (hasProcessed.current) {
+            return;
+        }
+        hasProcessed.current = true;
+
         // Check if we already have tokens (successful previous attempt)
         if (localStorage.getItem("spotifyAccessToken")) {
             console.log("Already have tokens, redirecting...");
@@ -74,7 +81,7 @@ function Callback() {
                 navigate("/login");
             }, 3000);
         });
-    }, [navigate]);
+    }, []); // Empty dependency array - run once on mount
 
     if (error) {
         return (
